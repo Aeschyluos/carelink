@@ -1,3 +1,7 @@
+node_modules
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
 *.log
 .DS_Store
 .env
