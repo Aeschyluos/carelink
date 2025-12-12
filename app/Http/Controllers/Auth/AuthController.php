@@ -18,31 +18,32 @@ class AuthController extends Controller
 
     // Process Login
     public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ], [
-            'email.required' => __('validation.required', ['attribute' => __('Email')]),
-            'email.email' => __('validation.email', ['attribute' => __('Email')]),
-            'password.required' => __('validation.required', ['attribute' => __('Password')]),
-        ]);
+{
+    $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|min:8',
+    ], [
+        'email.required' => 'Email is required',
+        'email.email' => 'Please enter a valid email address',
+        'password.required' => 'Password is required',
+        'password.min' => 'Password must be at least 8 characters',
+    ]);
 
-        if (Auth::attempt($credentials, $request->filled('remember'))) {
-            $request->session()->regenerate();
+    if (Auth::attempt($credentials, $request->filled('remember'))) {
+        $request->session()->regenerate();
 
-            // Redirect based on role
-            if (Auth::user()->isAdmin()) {
-                return redirect()->intended('/admin/dashboard');
-            } else {
-                return redirect()->intended('/client/dashboard');
-            }
+        // Redirect based on role
+        if (Auth::user()->isAdmin()) {
+            return redirect()->intended('/admin/dashboard');
+        } else {
+            return redirect()->intended('/client/dashboard');
         }
-
-        return back()->withErrors([
-            'email' => __('auth.failed'),
-        ])->onlyInput('email');
     }
+
+    return back()->withErrors([
+        'email' => 'The provided credentials do not match our records.',
+    ])->withInput($request->only('email'));
+}
 
     // Show Register Form
     public function showRegister()
@@ -54,21 +55,66 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'phone' => 'required|string',
-            'address' => 'required|string',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                'min:3',
+                'regex:/^[a-zA-Z\s]+$/', // Only letters and spaces
+            ],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users',
+                'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', // Valid email format
+            ],
+            'phone' => [
+                'required',
+                'string',
+                'regex:/^[0-9]{10,15}$/', // 10-15 digits only
+            ],
+            'address' => [
+                'required',
+                'string',
+                'min:10',
+                'max:500',
+            ],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', // Must contain uppercase, lowercase, and number
+            ],
         ], [
-            'name.required' => __('validation.required', ['attribute' => __('Name')]),
-            'email.required' => __('validation.required', ['attribute' => __('Email')]),
-            'email.email' => __('validation.email', ['attribute' => __('Email')]),
-            'email.unique' => __('validation.unique', ['attribute' => __('Email')]),
-            'password.required' => __('validation.required', ['attribute' => __('Password')]),
-            'password.min' => __('validation.min.string', ['attribute' => __('Password'), 'min' => 8]),
-            'password.confirmed' => __('validation.confirmed', ['attribute' => __('Password')]),
-            'phone.required' => __('validation.required', ['attribute' => __('Phone')]),
-            'address.required' => __('validation.required', ['attribute' => __('Address')]),
+            // Name
+            'name.required' => 'Name is required',
+            'name.min' => 'Name must be at least 3 characters',
+            'name.max' => 'Name cannot exceed 255 characters',
+            'name.regex' => 'Name can only contain letters and spaces',
+            
+            // Email
+            'email.required' => 'Email is required',
+            'email.email' => 'Please enter a valid email address',
+            'email.unique' => 'This email is already registered',
+            'email.regex' => 'Please enter a valid email format (e.g., user@example.com)',
+            
+            // Phone
+            'phone.required' => 'Phone number is required',
+            'phone.regex' => 'Phone number must be 10-15 digits only (e.g., 08123456789)',
+            
+            // Address
+            'address.required' => 'Address is required',
+            'address.min' => 'Address must be at least 10 characters',
+            'address.max' => 'Address cannot exceed 500 characters',
+            
+            // Password
+            'password.required' => 'Password is required',
+            'password.min' => 'Password must be at least 8 characters',
+            'password.confirmed' => 'Password confirmation does not match',
+            'password.regex' => 'Password must contain at least one uppercase letter, one lowercase letter, and one number',
         ]);
 
         $user = User::create([
@@ -82,16 +128,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/client/dashboard');
-    }
-
-    // Logout
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('/');
+        return redirect('/client/dashboard')
+            ->with('success', 'Registration successful! Welcome to CareLink.');
     }
 }

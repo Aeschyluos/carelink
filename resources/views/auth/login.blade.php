@@ -11,25 +11,44 @@
                         <h3 class="mt-3">{{ __('Login to CareLink') }}</h3>
                     </div>
 
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('login') }}" id="loginForm">
                         @csrf
 
                         <div class="mb-3">
-                            <label for="email" class="form-label">{{ __('Email Address') }}</label>
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" 
-                                   name="email" value="{{ old('email') }}" required autofocus>
+                            <label for="email" class="form-label">{{ __('Email Address') }} <span class="text-danger">*</span></label>
+                            <input id="email" 
+                                   type="email" 
+                                   class="form-control @error('email') is-invalid @enderror" 
+                                   name="email" 
+                                   value="{{ old('email') }}" 
+                                   required 
+                                   autofocus
+                                   placeholder="user@example.com"
+                                   pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
                             @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback">
+                                    <i class="bi bi-exclamation-circle"></i> {{ $message }}
+                                </div>
                             @enderror
+                            <small class="text-muted">Example: admin@carelink.com</small>
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">{{ __('Password') }}</label>
-                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" 
-                                   name="password" required>
-                            @error('password')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <label for="password" class="form-label">{{ __('Password') }} <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <input id="password" 
+                                       type="password" 
+                                       class="form-control @error('password') is-invalid @enderror" 
+                                       name="password" 
+                                       required
+                                       minlength="8"
+                                       placeholder="Minimum 8 characters">
+                                @error('password')
+                                    <div class="invalid-feedback">
+                                        <i class="bi bi-exclamation-circle"></i> {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="mb-3 form-check">
@@ -51,7 +70,36 @@
                     </form>
                 </div>
             </div>
+
+            <!-- Demo Credentials Card -->
+            <div class="card mt-3 bg-light">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Demo Accounts:</h6>
+                    <small class="text-muted">
+                        <strong>Admin:</strong> admin@carelink.com / password<br>
+                        <strong>Client:</strong> client@carelink.com / password
+                    </small>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    
+    if (!email.checkValidity()) {
+        e.preventDefault();
+        email.classList.add('is-invalid');
+    }
+    
+    if (!password.checkValidity()) {
+        e.preventDefault();
+        password.classList.add('is-invalid');
+    }
+});
+</script>
+
 @endsection
