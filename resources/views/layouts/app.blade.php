@@ -93,14 +93,14 @@
 
     <!-- Main Content -->
     <main>
-        @if(session('success'))
+        <!-- @if(session('success'))
             <div class="container mt-3">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <i class="bi bi-check-circle"></i> {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             </div>
-        @endif
+        @endif -->
 
         @if(session('error'))
             <div class="container mt-3">

@@ -27,6 +27,16 @@
                             <i class="bi bi-capsule"></i> {{ __('messages.medicines') }}
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.consultations.index') }}">
+                            <i class="bi bi-calendar-check"></i> Consultations
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.orders.index') }}">
+                            <i class="bi bi-bag-check"></i> Medicine Orders
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -78,7 +88,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <!-- <div class="col-md-3">
                     <div class="card text-white bg-warning">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
@@ -90,7 +100,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <!-- Recent Data -->
@@ -118,8 +128,14 @@
                                             <td>{{ $consultation->user->name }}</td>
                                             <td>{{ $consultation->doctor->name }}</td>
                                             <td>
-                                                <span class="badge bg-{{ $consultation->status == 'completed' ? 'success' : 'warning' }}">
+                                                <!-- <span class="badge bg-{{ $consultation->status == 'completed' ? 'success' : 'warning' }}">
                                                     {{ $consultation->status }}
+                                                </span> -->
+                                                <span class="badge bg-{{ 
+                                                    $consultation->status == 'completed' ? 'success' : 
+                                                    ($consultation->status == 'confirmed' ? 'info' : 
+                                                    ($consultation->status == 'cancelled' ? 'danger' : 'warning'))}}">
+                                                    {{ ucfirst($consultation->status) }}
                                                 </span>
                                             </td>
                                         </tr>
@@ -158,8 +174,12 @@
                                             <td>{{ $order->user->name }}</td>
                                             <td>Rp {{ number_format($order->total_amount, 0, ',', '.') }}</td>
                                             <td>
-                                                <span class="badge bg-{{ $order->status == 'delivered' ? 'success' : 'warning' }}">
-                                                    {{ $order->status }}
+                                                <span class="badge bg-{{ 
+                                                    $order->status == 'delivered' ? 'success' : 
+                                                    ($order->status == 'shipped' ? 'info' : 
+                                                    ($order->status == 'cancelled' ? 'danger' : 'warning'))}}"
+                                                >
+                                                {{ ucfirst($order->status) }}
                                                 </span>
                                             </td>
                                         </tr>

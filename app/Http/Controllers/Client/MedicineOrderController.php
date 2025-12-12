@@ -101,8 +101,8 @@ class MedicineOrderController extends Controller
 
             DB::commit();
 
-            return redirect()->route('client.orders.show', $order)
-                ->with('success', 'Order placed successfully');
+            return redirect()->route('client.dashboard')
+                ->with('success', "Order placed successfully! Order code: {$order->order_code}. Total: Rp " . number_format($order->total_amount, 0, ',', '.'));
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -120,4 +120,38 @@ class MedicineOrderController extends Controller
 
         return view('client.orders.show', compact('order'));
     }
+
+    public function cancel(MedicineOrder $order)
+    {
+        // Check ownership
+        if ($order->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        // Only pending orders can be cancelled
+        if ($order->status !== 'pending') {
+            return redirect()->back()->with('error', 'Only pending orders can be cancelled');
+        }
+
+        DB::beginTransaction();
+        try {
+            // Restore medicine stock
+            foreach ($order->items as $item) {
+                $item->medicine->increment('stock', $item->quantity);
+            }
+
+            // Update order status
+            $order->update(['status' => 'cancelled']);
+
+            DB::commit();
+
+            return redirect()->route('client.orders.index')
+                ->with('success', 'Order cancelled successfully. Stock has been restored.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Failed to cancel order: ' . $e->getMessage());
+        }
+    }
 }
+

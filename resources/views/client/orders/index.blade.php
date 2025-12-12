@@ -91,9 +91,18 @@
                                     </ul>
                                 </div>
                                 <div class="col-md-4 text-end">
-                                    <a href="{{ route('client.orders.show', $order) }}" class="btn btn-sm btn-primary">
-                                        View Details
-                                    </a>
+                                    <!-- Cancel Button untuk Pending Orders -->
+                                    @if($order->status === 'pending')
+                                    <form action="{{ route('client.orders.cancel', $order) }}" 
+                                        method="POST" 
+                                        class="d-inline"
+                                        onsubmit="return confirm('Are you sure you want to cancel this order? Stock will be restored.')">
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="bi bi-x-circle"></i> Cancel Order
+                                        </button>
+                                    </form>
+                                    @endif
                                 </div>
                             </div>
                         </div>

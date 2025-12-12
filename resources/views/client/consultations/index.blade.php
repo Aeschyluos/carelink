@@ -87,10 +87,10 @@
                                     </td>
                                     <td>
                                         <div class="btn-group btn-group-sm">
-                                            <a href="{{ route('client.consultations.show', $consultation) }}" 
+                                            <!-- <a href="{{ route('client.consultations.show', $consultation) }}" 
                                                class="btn btn-info">
                                                 <i class="bi bi-eye"></i>
-                                            </a>
+                                            </a> -->
                                             @if($consultation->status == 'pending')
                                             <form action="{{ route('client.consultations.cancel', $consultation) }}" 
                                                   method="POST" onsubmit="return confirm('Cancel this consultation?')">

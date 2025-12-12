@@ -27,6 +27,16 @@
                             <i class="bi bi-capsule"></i> {{ __('messages.medicines') }}
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.consultations.index') }}">
+                            <i class="bi bi-calendar-check"></i> Consultations
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.orders.index') }}">
+                            <i class="bi bi-bag-check"></i> Medicine Orders
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>

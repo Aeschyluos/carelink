@@ -72,8 +72,8 @@ class ConsultationController extends Controller
             'payment_status' => 'unpaid',
         ]);
 
-        return redirect()->route('client.consultations.show', $consultation)
-            ->with('success', 'Consultation booked successfully');
+        return redirect()->route('client.dashboard')
+            ->with('success', "Consultation booked successfully! Booking code: {$consultation->booking_code}");
     }
 
     public function show(Consultation $consultation)

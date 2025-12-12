@@ -43,10 +43,22 @@
 
         <!-- Main Content -->
         <main class="col-md-10 ms-sm-auto px-md-4">
+            <!-- Success Message dengan style lebih menarik -->
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-check-circle-fill me-2" style="font-size: 1.5rem;"></i>
+                        <div>
+                            <strong>Success!</strong>
+                            <p class="mb-0">{{ session('success') }}</p>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
             <div class="pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Welcome, {{ Auth::user()->name }}!</h1>
             </div>
-
             <!-- Quick Stats -->
             <div class="row g-3 mb-4">
                 <div class="col-md-6">
@@ -67,7 +79,7 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <h6 class="text-muted mb-1">Medicine Orders</h6>
+                                    <h6 class="text-muted mb-1">Total Medicine Orders</h6>
                                     <h2 class="mb-0">{{ $orders }}</h2>
                                 </div>
                                 <i class="bi bi-bag-check text-success" style="font-size: 2.5rem; opacity: 0.3;"></i>
@@ -97,7 +109,10 @@
                                         <i class="bi bi-calendar"></i> {{ $consultation->consultation_date->format('d M Y') }}
                                     </p>
                                 </div>
-                                <span class="badge bg-{{ $consultation->status == 'completed' ? 'success' : ($consultation->status == 'confirmed' ? 'info' : 'warning') }}">
+                                <span class="badge bg-{{ 
+                                    $consultation->status == 'completed' ? 'success' : 
+                                    ($consultation->status == 'confirmed' ? 'info' : 
+                                    ($consultation->status == 'cancelled' ? 'danger' : 'warning'))}}">
                                     {{ ucfirst($consultation->status) }}
                                 </span>
                             </div>
@@ -127,8 +142,12 @@
                                         Rp {{ number_format($order->total_amount, 0, ',', '.') }}
                                     </p>
                                 </div>
-                                <span class="badge bg-{{ $order->status == 'delivered' ? 'success' : ($order->status == 'shipped' ? 'info' : 'warning') }}">
-                                    {{ ucfirst($order->status) }}
+                                <span class="badge bg-{{ 
+                                    $order->status == 'delivered' ? 'success' : 
+                                    ($order->status == 'shipped' ? 'info' : 
+                                    ($order->status == 'cancelled' ? 'danger' : 'warning'))}}"
+                                >
+                                {{ ucfirst($order->status) }}
                                 </span>
                             </div>
                             @empty
@@ -139,35 +158,7 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Quick Actions -->
-            <div class="card">
-                <div class="card-header bg-white">
-                    <h5 class="mb-0">Quick Actions</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row g-3">
-                        <div class="col-md-4">
-                            <a href="{{ route('client.doctors.index') }}" class="btn btn-outline-primary w-100 py-3">
-                                <i class="bi bi-person-badge d-block mb-2" style="font-size: 2rem;"></i>
-                                Find a Doctor
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="{{ route('client.clinics.index') }}" class="btn btn-outline-success w-100 py-3">
-                                <i class="bi bi-hospital d-block mb-2" style="font-size: 2rem;"></i>
-                                Find a Clinic
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="{{ route('client.medicines.index') }}" class="btn btn-outline-danger w-100 py-3">
-                                <i class="bi bi-capsule d-block mb-2" style="font-size: 2rem;"></i>
-                                Buy Medicines
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          
         </main>
     </div>
 </div>

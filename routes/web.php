@@ -29,6 +29,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('doctors', DoctorController::class);
     Route::resource('clinics', ClinicController::class);
     Route::resource('medicines', MedicineController::class);
+    
+    Route::get('/consultations', [\App\Http\Controllers\Admin\ConsultationController::class, 'index'])->name('consultations.index');
+    Route::post('/consultations/{consultation}/status', [\App\Http\Controllers\Admin\ConsultationController::class, 'updateStatus'])->name('consultations.updateStatus');
+    Route::delete('/consultations/{consultation}', [\App\Http\Controllers\Admin\ConsultationController::class, 'destroy'])->name('consultations.destroy');
+    
+    Route::get('/orders', [\App\Http\Controllers\Admin\MedicineOrderController::class, 'index'])->name('orders.index');
+    Route::post('/orders/{order}/status', [\App\Http\Controllers\Admin\MedicineOrderController::class, 'updateStatus'])->name('orders.updateStatus');
+    Route::delete('/orders/{order}', [\App\Http\Controllers\Admin\MedicineOrderController::class, 'destroy'])->name('orders.destroy');
 });
 
 // Client Routes
@@ -66,6 +74,8 @@ Route::middleware(['auth', 'client'])->prefix('client')->name('client.')->group(
     Route::get('/orders/create', [\App\Http\Controllers\Client\MedicineOrderController::class, 'create'])->name('orders.create');
     Route::post('/orders', [\App\Http\Controllers\Client\MedicineOrderController::class, 'store'])->name('orders.store');
     Route::get('/orders/{order}', [\App\Http\Controllers\Client\MedicineOrderController::class, 'show'])->name('orders.show');
+    Route::post('/orders/{order}/cancel', [\App\Http\Controllers\Client\MedicineOrderController::class, 'cancel'])->name('orders.cancel');
+
 });
 
 // Language Switcher
