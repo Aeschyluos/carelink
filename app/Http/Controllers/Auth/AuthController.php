@@ -131,4 +131,13 @@ class AuthController extends Controller
         return redirect('/client/dashboard')
             ->with('success', 'Registration successful! Welcome to CareLink.');
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
 }
