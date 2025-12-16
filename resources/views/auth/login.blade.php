@@ -30,7 +30,7 @@
                                     <i class="bi bi-exclamation-circle"></i> {{ $message }}
                                 </div>
                             @enderror
-                            <small class="text-muted">Example: admin@carelink.com</small>
+                            <small class="text-muted">Example: client@carelink.com</small>
                         </div>
 
                         <div class="mb-3">
@@ -71,16 +71,7 @@
                 </div>
             </div>
 
-            <!-- Demo Credentials Card -->
-            <div class="card mt-3 bg-light">
-                <div class="card-body">
-                    <h6 class="text-muted mb-2">Demo Accounts:</h6>
-                    <small class="text-muted">
-                        <strong>Admin:</strong> admin@carelink.com / password<br>
-                        <strong>Client:</strong> client@carelink.com / password
-                    </small>
-                </div>
-            </div>
+        
         </div>
     </div>
 </div>

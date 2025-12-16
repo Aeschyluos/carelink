@@ -48,7 +48,7 @@
             </div>
 
             <!-- Filter Tabs -->
-            <ul class="nav nav-tabs mb-3">
+            <!-- <ul class="nav nav-tabs mb-3">
                 <li class="nav-item">
                     <a class="nav-link {{ !request('status') ? 'active' : '' }}" href="{{ route('admin.consultations.index') }}">
                         All ({{ $consultations->total() }})
@@ -69,7 +69,7 @@
                         Completed
                     </a>
                 </li>
-            </ul>
+            </ul> -->
 
             <div class="card">
                 <div class="card-body">

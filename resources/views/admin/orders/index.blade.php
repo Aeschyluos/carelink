@@ -48,7 +48,7 @@
             </div>
 
             <!-- Filter Tabs -->
-            <ul class="nav nav-tabs mb-3">
+            <!-- <ul class="nav nav-tabs mb-3">
                 <li class="nav-item">
                     <a class="nav-link {{ !request('status') ? 'active' : '' }}" href="{{ route('admin.orders.index') }}">
                         All ({{ $orders->total() }})
@@ -73,7 +73,7 @@
                     <a class="nav-link {{ request('status') == 'delivered' ? 'active' : '' }}" href="{{ route('admin.orders.index', ['status' => 'delivered']) }}">
                         Delivered
                     </a>
-                </li>
+                </li> -->
             </ul>
 
             <div class="card">

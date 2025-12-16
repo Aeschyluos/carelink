@@ -1,4 +1,4 @@
-# CareLink - Healthcare Consultation System
+# CareLink
 
 CareLink adalah aplikasi berbasis web untuk konsultasi kesehatan yang memudahkan pasien untuk:
 
@@ -6,33 +6,7 @@ CareLink adalah aplikasi berbasis web untuk konsultasi kesehatan yang memudahkan
 -   Menemukan klinik/rumah sakit terdekat
 -   Membeli obat over-the-counter (OTC)
 
-## 🚀 Fitur Utama
-
-### Admin
-
--   Manajemen Data Dokter (CRUD)
--   Manajemen Data Klinik (CRUD)
--   Manajemen Data Obat (CRUD)
--   Monitoring Konsultasi & Pesanan
--   Dashboard Statistik
-
-### Client
-
--   Browse & Search Dokter
--   Browse & Search Klinik
--   Booking Konsultasi Dokter
--   Beli Obat OTC
--   Shopping Cart
--   History Konsultasi & Pesanan
-
-## 📋 Requirements
-
--   PHP >= 8.2
--   Composer
--   MySQL
--   Laravel 12
-
-## 🛠️ Instalasi
+## Installation
 
 ```bash
 # Clone repository
@@ -62,37 +36,3 @@ php artisan storage:link
 # Start server
 php artisan serve
 ```
-
-## 👥 Login Credentials
-
-**Admin:**
-
--   Email: admin@carelink.com
--   Password: password
-
-**Client:**
-
--   Email: client@carelink.com
--   Password: password
-
-## 🌐 Teknologi
-
--   Laravel 12
--   Bootstrap 5 (via CDN)
--   Bootstrap Icons
--   MySQL
--   PHP 8.2+
-
-## 📸 Screenshots
-
-[Tambahkan screenshots aplikasi]
-
-## 👨‍💻 Tim Pengembang
-
--   [Nama 1] - [NIM]
--   [Nama 2] - [NIM]
--   [Nama 3] - [NIM]
-
-## 📄 License
-
-This project is for educational purposes.

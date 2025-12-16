@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'CareLink') }}</title>
+    <title>Carelink</title>
     
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -71,7 +71,7 @@
                                 </li>
                             </ul>
                         </li>
-                        
+<!--                         
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
                                 <i class="bi bi-globe"></i> {{ strtoupper(app()->getLocale()) }}
@@ -80,7 +80,7 @@
                                 <li><a class="dropdown-item" href="{{ route('language.switch', 'en') }}">🇬🇧 English</a></li>
                                 <li><a class="dropdown-item" href="{{ route('language.switch', 'id') }}">🇮🇩 Bahasa Indonesia</a></li>
                             </ul>
-                        </li>
+                        </li> -->
                     @endguest
                 </ul>
             </div>
